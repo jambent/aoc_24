@@ -6,7 +6,8 @@
 int main (int argc, char *argv[]) {
 
     FILE *fp;
-    int list_one_integer, list_two_integer;
+    int end_of_file_check;
+    int line_count = 1;
 
     fp = fopen(argv[1], "r");
 
@@ -20,20 +21,27 @@ int main (int argc, char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
-    fscanf(fp, "%d %d", &list_one_integer, &list_two_integer);
-    
+    // Count number of lines in file
+    while ((end_of_file_check = getc(fp))!= EOF) {
+        if (end_of_file_check == '\n') {
+            line_count++;
+        }
+    }
 
-    printf("First integer in file found: %d\n", list_one_integer);
-    printf("Second integer in file found: %d\n", list_two_integer);
+    // Create two arrays to store the two lists, and populate them after rewinding file pointer
+    int list_one_array[line_count], list_two_array[line_count];
+    int array_population_index = 0;
 
-    fscanf(fp, "%d %d", &list_one_integer, &list_two_integer);
-    
+    rewind(fp);
 
-    printf("First integer in file found: %d\n", list_one_integer);
-    printf("Second integer in file found: %d\n", list_two_integer);
+    while ((end_of_file_check = getc(fp))!= EOF) {
+        fscanf(fp, "%d %d", &list_one_array[array_population_index], &list_two_array[array_population_index]);
+        array_population_index++;
+    }
+
+    printf("Last array elements: %d %d\n", list_one_array[line_count-1], list_two_array[line_count-1]);
 
     fclose(fp);
     
-
     return 0;
 }
