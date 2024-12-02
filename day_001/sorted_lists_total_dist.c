@@ -7,7 +7,7 @@ int main (int argc, char *argv[]) {
 
     FILE *fp;
     int end_of_file_check;
-    int line_count = 1;
+    int line_count = 1; // 1, because last line will not have \n
 
     fp = fopen(argv[1], "r");
 
@@ -27,16 +27,15 @@ int main (int argc, char *argv[]) {
             line_count++;
         }
     }
-
+  
     // Create two arrays to store the two lists, and populate them after rewinding file pointer
     int list_one_array[line_count], list_two_array[line_count];
-    int array_population_index = 0;
 
     rewind(fp);
 
-    while ((end_of_file_check = getc(fp))!= EOF) {
-        fscanf(fp, "%d %d", &list_one_array[array_population_index], &list_two_array[array_population_index]);
-        array_population_index++;
+    for (int array_population_index = 0; array_population_index < line_count; array_population_index++){
+        fscanf(fp, "%d", &list_one_array[array_population_index]);
+        fscanf(fp, "%d", &list_two_array[array_population_index]);
     }
 
     fclose(fp);
@@ -45,7 +44,7 @@ int main (int argc, char *argv[]) {
     //Selection sort algorithm
     int *target_value, *lowest_value, temp;
     // Sort list_one_array
-    for (int i = 0; i < line_count - 1; i++){
+    for (int i = 0; i < line_count; i++){
         target_value = &list_one_array[i];
         lowest_value = &list_one_array[i];
         
@@ -62,7 +61,7 @@ int main (int argc, char *argv[]) {
     }
 
     // Sort list_two_array
-    for (int i = 0; i < line_count - 1; i++){
+    for (int i = 0; i < line_count; i++){
         target_value = &list_two_array[i];
         lowest_value = &list_two_array[i];
         
@@ -81,19 +80,11 @@ int main (int argc, char *argv[]) {
     // Calculate total distance between sorted lists
     int total_distance = 0;
 
-    for (int i = 0; i < line_count - 1; i++){
+    for (int i = 0; i < line_count; i++){
         total_distance += abs(list_one_array[i] - list_two_array[i]);
     }
     
     printf("Total distance between sorted lists: %d\n", total_distance);
-    // printf("List one: \n");
-    // for (int i = 0; i < line_count - 1; i++){
-    //     printf("%d\n", list_one_array[i]);
-    // }
-    // printf("List two: \n");
-    // for (int i = 0; i < line_count - 1; i++){
-    //     printf("%d\n", list_two_array[i]);
-    // }
         
     return 0;
 }
