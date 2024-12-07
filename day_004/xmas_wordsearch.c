@@ -134,11 +134,9 @@ int main (int argc, char *argv[]) {
                     if (i <= 256-4){
                         
                         if(line_007[i] == 'X' && line_006[i+1] == 'M' && line_005[i+2] == 'A' && line_004[i+3] == 'S') {
-                            // printf("In right-up count inc XMAS\n");
                             xmas_count++;
                         }
                         if(line_007[i] == 'S' && line_006[i+1] == 'A' && line_005[i+2] == 'M' && line_004[i+3] == 'X') {
-                            // printf("In right-up count inc SAMX\n");
                             xmas_count++;
                         }
                     }
@@ -146,9 +144,6 @@ int main (int argc, char *argv[]) {
 
             }
         }
-        // printf("Line count: %d\n", line_count);
-        // printf("Line number: %d\n", line_num);
-        // printf("Window line width: %d\n", window_line_width);
 
     }
 
