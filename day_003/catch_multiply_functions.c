@@ -85,5 +85,7 @@ int main (int argc, char *argv[]) {
     }
     printf("Sum of all multiplier functions: %d\n", multiplier_function_sum);
     fclose(fp);
+
+    return 0;
 }
 
