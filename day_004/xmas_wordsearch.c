@@ -39,10 +39,12 @@ int main (int argc, char *argv[]) {
             line_count++;
         }
     }
+    line_count++; //Account for last line that ends with EOF
 
     rewind(fp);
 
     while (line_num < line_count) {
+
         if((char_pointer = fgets(new_line, 256, fp)) != NULL){
             line_num++;
             if (window_line_width == 0){
@@ -110,18 +112,44 @@ int main (int argc, char *argv[]) {
                 if (line_007[i] == 'S' && line_007[i+1] == 'A' && line_007[i+2] == 'M' && line_007[i+3] == 'X'){
                     xmas_count++;
                 }
-
+                
                 if(window_line_width >= 4){
+                    // Count both "XMAS" and "SAMX", vertically
                     if(line_007[i] == 'X' && line_006[i] == 'M' && line_005[i] == 'A' && line_004[i] == 'S') {
                         xmas_count++;
                     }
                     if(line_007[i] == 'S' && line_006[i] == 'A' && line_005[i] == 'M' && line_004[i] == 'X') {
                         xmas_count++;
                     }
+                    // Count both "XMAS" and "SAMX", left-up diagonally
+                    if(i >=3){
+                        if(line_007[i] == 'X' && line_006[i-1] == 'M' && line_005[i-2] == 'A' && line_004[i-3] == 'S') {
+                            xmas_count++;
+                        }
+                        if(line_007[i] == 'S' && line_006[i-1] == 'A' && line_005[i-2] == 'M' && line_004[i-3] == 'X') {
+                            xmas_count++;
+                        }
+                    }
+                    // Count both "XMAS" and "SAMX", right-up diagonally
+                    if (i <= 256-4){
+                        
+                        if(line_007[i] == 'X' && line_006[i+1] == 'M' && line_005[i+2] == 'A' && line_004[i+3] == 'S') {
+                            // printf("In right-up count inc XMAS\n");
+                            xmas_count++;
+                        }
+                        if(line_007[i] == 'S' && line_006[i+1] == 'A' && line_005[i+2] == 'M' && line_004[i+3] == 'X') {
+                            // printf("In right-up count inc SAMX\n");
+                            xmas_count++;
+                        }
+                    }
                 }
 
             }
         }
+        // printf("Line count: %d\n", line_count);
+        // printf("Line number: %d\n", line_num);
+        // printf("Window line width: %d\n", window_line_width);
+
     }
 
 
